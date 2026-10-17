@@ -54,6 +54,11 @@ def _safe_handle(update):
         logger.exception("update handling failed")
 
 
+def health(request):
+    """Keep-alive endpoint for uptime pingers."""
+    return HttpResponse("ok")
+
+
 @csrf_exempt
 @require_POST
 def webhook(request):
@@ -68,6 +73,10 @@ def webhook(request):
     except (ValueError, UnicodeDecodeError):
         return JsonResponse({"ok": False}, status=400)
 
-    # Answer Telegram fast (it retries on slow replies); the download runs in the background.
-    threading.Thread(target=_safe_handle, args=(update,), daemon=True).start()
+    if settings.SYNC_PROCESSING:
+        # Serverless hosts (Cloud Run) throttle CPU after the response is sent, so work inline.
+        _safe_handle(update)
+    else:
+        # Answer Telegram fast (it retries on slow replies); the download runs in the background.
+        threading.Thread(target=_safe_handle, args=(update,), daemon=True).start()
     return HttpResponse("ok")

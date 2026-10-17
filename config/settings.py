@@ -40,7 +40,9 @@ ALLOWED_HOSTS = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost
 
 BOT_TOKEN = _required("BOT_TOKEN")
 WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "")
-WEBHOOK_BASE_URL = os.getenv("WEBHOOK_BASE_URL", "").rstrip("/")
+# RENDER_EXTERNAL_URL is injected by Render, so the webhook can self-register on boot.
+WEBHOOK_BASE_URL = (os.getenv("WEBHOOK_BASE_URL") or os.getenv("RENDER_EXTERNAL_URL", "")).rstrip("/")
+SYNC_PROCESSING = os.getenv("SYNC_PROCESSING", "False").lower() == "true"
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",

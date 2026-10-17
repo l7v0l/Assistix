@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: assistix
+    runtime: docker
+    plan: free
+    healthCheckPath: /bot/health/
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "*"
+      - key: SYNC_PROCESSING
+        value: "false"
