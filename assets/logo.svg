@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="mk" gradientUnits="userSpaceOnUse" x1="136" y1="90" x2="376" y2="420">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#6D28D9" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#6D28D9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tri" gradientUnits="userSpaceOnUse" x1="0" y1="250" x2="0" y2="330">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#C4B5FD"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="#0A0A14"/>
+  <rect width="512" height="512" fill="url(#glow)"/>
+
+  <!-- soft glow under the mark -->
+  <path d="M136 400 L256 110 L376 400" fill="none" stroke="url(#mk)" stroke-width="56"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.55" filter="url(#soft)"/>
+
+  <!-- "A" monogram -->
+  <path d="M136 400 L256 110 L376 400" fill="none" stroke="url(#mk)" stroke-width="52"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- download / play triangle as the crossbar -->
+  <path d="M222 262 L290 262 L256 322 Z" fill="url(#tri)" stroke="url(#tri)" stroke-width="10" stroke-linejoin="round"/>
+
+  <!-- base line -->
+  <path d="M206 392 L306 392" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="12" stroke-linecap="round"/>
+</svg>
