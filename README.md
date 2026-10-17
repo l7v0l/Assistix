@@ -1,72 +1,39 @@
-# Assistix (@AssistixBot)
+<div align="center">
 
-بوت تليجرام لتحميل فيديوهات تيك توك بدون علامة مائية. Django + yt-dlp + Webhook.
+<img src="assets/logo.png" alt="Assistix logo" width="180">
 
-## الهيكل
+# Assistix
 
-```
-manage.py
-requirements.txt
-.env.example
-config/            # إعدادات Django (settings, urls, wsgi)
-bot/
-  views.py         # webhook (@csrf_exempt) + منطق الأوامر
-  urls.py          # /bot/webhook/
-  utils.py         # التحقق من الروابط، yt-dlp، Telegram API
-  management/commands/set_webhook.py
-```
+**بوت تليجرام لتحميل فيديوهات تيك توك بدون علامة مائية — بسرعة وبضغطة واحدة**
 
-## التشغيل
+[@AssistixDLBot](https://t.me/AssistixDLBot)
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate          # Linux: source .venv/bin/activate
-pip install -r requirements.txt
-copy .env.example .env          # Linux: cp .env.example .env
-```
+</div>
 
-عبّئ `.env`:
+<div dir="rtl">
 
-- `BOT_TOKEN` من @BotFather
-- `WEBHOOK_SECRET` نص عشوائي (حروف/أرقام/`_`/`-`)
-- `WEBHOOK_BASE_URL` رابط HTTPS العام للسيرفر
-- `DJANGO_SECRET_KEY` مفتاح عشوائي طويل
-- `DJANGO_ALLOWED_HOSTS` دومين السيرفر
+## فكرة البوت
 
-توليد مفتاح:
+تشاهد فيديو على تيك توك وتريد حفظه بدون العلامة المائية؟ أرسل الرابط إلى **Assistix** في تليجرام، وخلال ثوانٍ يصلك الفيديو جاهزًا داخل المحادثة. بدون مواقع مليئة بالإعلانات، وبدون تطبيقات إضافية، وبدون تسجيل.
 
-```bash
-python -c "import secrets; print(secrets.token_urlsafe(50))"
-```
+## المميزات
 
-## ربط الـ Webhook
+- 🚫 **بدون علامة مائية:** يحمّل النسخة النظيفة من الفيديو.
+- ⚡ **سريع:** تليجرام نفسه يسحب الفيديو من تيك توك مباشرة، دون أن يمر عبر السيرفر.
+- 🔗 **يدعم كل أنواع الروابط:** الروابط الكاملة والمختصرة مثل `vm.tiktok.com` و`vt.tiktok.com`.
+- 🎬 **يصلك الفيديو داخل المحادثة:** ملف فيديو جاهز للتشغيل والمشاركة، وليس رابطًا.
+- 💬 **ردود واضحة:** رسالة فورية أثناء المعالجة، ورسائل مفهومة عند الفيديو المحذوف أو الخاص.
+- 🛡️ **مستقر:** أي خطأ في رابط واحد لا يوقف البوت ولا يؤثر على غيرك.
+- 🔒 **خصوصية:** لا يحفظ أي بيانات ولا روابط، ولا يستخدم قاعدة بيانات.
 
-تليجرام يقبل HTTPS فقط على دومين عام. للتجربة المحلية استخدم ngrok:
+## طريقة الاستخدام
 
-```bash
-python manage.py runserver 8000
-ngrok http 8000
-```
+1. افتح [@AssistixDLBot](https://t.me/AssistixDLBot) واضغط `/start`.
+2. انسخ رابط الفيديو من تيك توك وأرسله.
+3. استلم الفيديو.
 
-ضع رابط ngrok في `WEBHOOK_BASE_URL` (وأضف دومينه إلى `DJANGO_ALLOWED_HOSTS`)، ثم:
+## التقنيات
 
-```bash
-python manage.py set_webhook          # تسجيل
-python manage.py set_webhook --info   # فحص الحالة
-python manage.py set_webhook --delete # إزالة
-```
+Python · Django · yt-dlp · Telegram Bot API (Webhook)
 
-## الإنتاج
-
-```bash
-gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 4 --timeout 120
-```
-
-ضع nginx/Caddy أمامه مع شهادة HTTPS. أعد تسجيل الـ webhook بعد أي تغيير في الرابط.
-
-## ملاحظات
-
-- الـ webhook يرد فورًا ويعالج التحميل في thread خلفي (تليجرام يعيد الإرسال إذا تأخر الرد).
-- الحد الأقصى للرفع عبر Bot API هو 50MB.
-- تيك توك يغيّر واجهته كثيرًا: حدّث yt-dlp باستمرار: `pip install -U yt-dlp`.
-- لا توجد قاعدة بيانات؛ البوت بدون حالة.
+</div>
